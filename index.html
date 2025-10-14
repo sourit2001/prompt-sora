@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sora Prompt Playground</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <div class="logo">Sora Prompt Playground</div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-links">
+          <a href="#generator">Playground</a>
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#stories">Creator Stories</a>
+        </div>
+        <a class="cta-link" href="#signup">Join Beta</a>
+      </nav>
+      <div class="hero-body">
+        <div class="hero-generator" id="generator">
+          <div class="generator-intro">
+            <span class="bubble-tag">AI Prompt Bubble Machine</span>
+            <h1>Start the conversation and watch a Sora prompt appear</h1>
+            <p>
+              Tell the bubble machine about your main character, the setting, and a signature line.
+              It will spin them into a cinematic prompt ready for Sora, complete with camera moves and mood cues.
+            </p>
+          </div>
+          <div class="generator">
+            <form id="promptForm" class="generator-form">
+              <label>
+                Character
+                <input
+                  type="text"
+                  name="character"
+                  placeholder="Example: A robotic tour guide zipping through an interstellar bazaar"
+                  required
+                />
+              </label>
+              <label>
+                Setting
+                <input
+                  type="text"
+                  name="setting"
+                  placeholder="Example: A bubble-shaped starliner atrium with floating neon candy nebulas"
+                  required
+                />
+              </label>
+              <label>
+                Signature Line or Plot Beat
+                <textarea
+                  name="dialogue"
+                  placeholder='Example: "Fasten stardust seatbelts! We are about to slingshot around the rainbow nebula!"'
+                  rows="3"
+                  required
+                ></textarea>
+              </label>
+              <div class="form-actions">
+                <button type="submit" class="btn primary">Shake the Bubble</button>
+                <button type="button" class="btn ghost" id="shuffleIdea">
+                  Need Inspiration
+                </button>
+              </div>
+            </form>
+            <div class="generator-output">
+              <div class="output-header">
+                <h3>Generated Sora Prompt</h3>
+                <button class="btn tiny" id="copyPrompt">Copy</button>
+              </div>
+              <pre id="promptResult" class="prompt-result">
+Tap “Shake the Bubble” to get a complete Sora prompt with camera, lighting, and sound directions.</pre
+              >
+              <div class="prompt-tags" id="promptTags"></div>
+              <p class="hint">
+                Each prompt is simulated with playful defaults. Hook it up to your LLM endpoint to unlock live generation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-wave" aria-hidden="true"></div>
+    </header>
+
+    <main>
+      <section id="about" class="section about">
+        <div class="about-content">
+          <span class="bubble-tag">Sora Prompt Playground</span>
+          <h2>Bring cartoon energy to production-ready Sora prompts</h2>
+          <p>
+            The Playground wraps professional prompt patterns in a whimsical interface so your team can move from
+            idea to rendered footage faster. Every draft weaves in camera language, lighting, pacing, and audio cues
+            that help Sora deliver the exact mood you imagined.
+          </p>
+          <dl class="hero-stats">
+            <div>
+              <dt>1500+ Templates</dt>
+              <dd>Advertising, education, tourism, entertainment, and more ready to remix.</dd>
+            </div>
+            <div>
+              <dt>12 Seconds</dt>
+              <dd>Average time to receive a fully structured prompt from the bubble machine.</dd>
+            </div>
+            <div>
+              <dt>98% Satisfaction</dt>
+              <dd>Creators love the richer camera notes and lower execution risk.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section id="features" class="section features">
+        <h2>A playful toolkit packed with production muscle</h2>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="card-icon sparkle"></div>
+            <h3>Cartoon-Style Guidance</h3>
+            <p>
+              Comic bubbles, floating planets, and micro-animations keep brainstorming fun while nudging you to capture the details that Sora needs.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="card-icon stack"></div>
+            <h3>Expert Prompt Templates</h3>
+            <p>
+              Industry frameworks cover focal length, motion paths, lighting design, palette, and sound cues so you can drop them straight into Sora.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="card-icon team"></div>
+            <h3>Team Collaboration</h3>
+            <p>
+              Comment, score, and compare variants in real time. Tags help crews document best practices and reuse winning prompts.
+            </p>
+          </article>
+          <article class="feature-card">
+            <div class="card-icon shield"></div>
+            <h3>Safety by Design</h3>
+            <p>
+              Built-in policy checks flag sensitive content and suggest kinder alternatives, keeping every render safe and compliant.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="workflow" class="section workflow">
+        <h2>Four LLM-powered steps from idea to Sora-ready prompt</h2>
+        <ol class="workflow-list">
+          <li>
+            <span class="step-number">01</span>
+            <div>
+              <h3>Collect the Essentials</h3>
+              <p>Capture the character, setting, and hook. We parse intent, genre, and stylistic cues instantly.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">02</span>
+            <div>
+              <h3>LLM Prompt Reasoning</h3>
+              <p>The backend blends your input with a camera-language library to enrich movement, lighting, pacing, and mood.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">03</span>
+            <div>
+              <h3>Generate Variants</h3>
+              <p>Receive up to three stylized takes—cartoon, cinematic, or experimental—so you can explore instantly.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">04</span>
+            <div>
+              <h3>Collaborate and Export</h3>
+              <p>Review with your crew, iterate with suggested templates, then ship the prompt directly to Sora.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="stories" class="section stories">
+        <div class="stories-header">
+          <h2>Creator stories from the bubble galaxy</h2>
+          <p>See how teams turn a single line of dialogue into an unforgettable Sora sequence.</p>
+        </div>
+        <div class="story-cards">
+          <article class="story-card">
+            <h3>The Galactic Mail Runner</h3>
+            <p>
+              With chase shots and nocturnal neon baked in, the final Sora render made viewers feel like they were floating through a cosmic post office.
+            </p>
+            <span class="story-author">- Startrail Animation Studio</span>
+          </article>
+          <article class="story-card">
+            <h3>Museum Morning Wake-Up</h3>
+            <p>
+              Cartoon lighting cues and playful audio notes turned silent artifacts into giggling hosts, pulling in over a million teenage viewers.
+            </p>
+            <span class="story-author">- City Discovery Center</span>
+          </article>
+          <article class="story-card">
+            <h3>Candy Planet Market</h3>
+            <p>
+              Collaboration tools let the crew test three directions in minutes and land on the ultra-chibi variant that fueled a product launch.
+            </p>
+            <span class="story-author">- Sweet Lab Collective</span>
+          </article>
+        </div>
+      </section>
+
+      <section id="signup" class="section cta">
+        <div class="cta-content">
+          <h2>Join the beta and build with the Bubble Planet crew</h2>
+          <p>
+            Early access includes multi-variant generation, team workspaces, and template fine-tuning. Drop your email and we’ll share an invite soon.
+          </p>
+        </div>
+        <form class="signup-form">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <label for="role">Creative Role</label>
+          <select id="role" name="role">
+            <option value="creator">Animation Creator</option>
+            <option value="producer">Producer / Ops</option>
+            <option value="marketer">Marketing / Ads</option>
+            <option value="educator">Educator</option>
+            <option value="other">Other</option>
+          </select>
+          <button type="submit" class="btn secondary">Request Access</button>
+          <small class="disclaimer"
+            >We respect your inbox. Unsubscribe any time with one click.</small
+          >
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-brand">
+        <span class="logo">Sora Prompt Playground</span>
+        <p>Making prompt generation as joyful as a cartoon and as precise as a film crew.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h4>Product</h4>
+          <a href="#generator">Prompt Playground</a>
+          <a href="#features">Feature Tour</a>
+          <a href="#stories">Creator Stories</a>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <a href="#">Prompting Guide</a>
+          <a href="#">Template Market</a>
+          <a href="#">Community Events</a>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <a href="#">FAQ</a>
+          <a href="#">Contact</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-extra">
+        <span>© 2024 Sora Prompt Playground</span>
+        <div class="social">
+          <a href="#">WeChat</a>
+          <a href="#">Weibo</a>
+          <a href="#">Bilibili</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="bubble-trail" aria-hidden="true"></div>
+
+    <script>
+      const promptForm = document.getElementById("promptForm");
+      const shuffleBtn = document.getElementById("shuffleIdea");
+      const promptResult = document.getElementById("promptResult");
+      const promptTags = document.getElementById("promptTags");
+      const copyBtn = document.getElementById("copyPrompt");
+      const navToggle = document.querySelector(".nav-toggle");
+      const navLinks = document.querySelector(".nav-links");
+      const bubbleTrail = document.querySelector(".bubble-trail");
+      const generateBtn = promptForm.querySelector('button[type="submit"]');
+
+      const ideaPresets = [
+        {
+          character: "Dream-diving detective cat",
+          setting: "A city made of soft candy skyscrapers with giant ticking pocket watches in the sky",
+          dialogue: "Every clue is sugar-coated—catch it before the nightmare does!",
+        },
+        {
+          character: "Bubble-wielding street magician",
+          setting: "A neon night market stage surrounded by levitating spectators trapped in shimmering bubbles",
+          dialogue: "Hold tight—these bubbles are portals to impossible worlds!",
+        },
+        {
+          character: "Time-hopping paper airplane courier",
+          setting: "A hand-drawn tunnel of eras where postcards from every century drift overhead",
+          dialogue: "Next delivery: future you—keep this note of courage safe.",
+        },
+      ];
+
+      const lensOptions = [
+        "Fisheye ultra-wide shot with exaggerated perspective",
+        "Gentle push-in inspired by animated storyboards",
+        "Hand-drawn handheld feel with playful sways",
+        "Low-angle hero frame amplifying the character’s presence",
+        "Floating drone orbit that sells the weightless world",
+      ];
+
+      const lightOptions = [
+        "Candy-neon key lights with softened halos",
+        "Warm amber and lavender rim lights for dreamlike contrast",
+        "Volumetric beams that slice through floating particles",
+        "Diffused daylight from the side with fairy-tale bloom",
+        "Alternating cool and warm spotlights like a stage show",
+      ];
+
+      const musicOptions = [
+        "Score: upbeat electro-jazz with playful xylophone riffs",
+        "Score: retro synthwave beats layered with children’s choir hums",
+        "Score: airy melodica and hand drums plus bubble pop foley",
+        "Score: orchestral swell punctuated by glittering star chimes",
+        "Score: futuristic chiptune tempo with hula-hoop whooshes",
+      ];
+
+      const tagOptions = [
+        "#CartoonStyle",
+        "#NeonDream",
+        "#CinematicCamera",
+        "#BubbleFX",
+        "#FairyTaleMood",
+        "#SlowMotion",
+        "#MusicCues",
+        "#VariantReady",
+      ];
+
+      function randomPick(list) {
+        return list[Math.floor(Math.random() * list.length)];
+      }
+
+      async function requestPromptFromServer(values) {
+        const response = await fetch("/api/prompts/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values),
+        });
+
+        if (!response.ok) {
+          const errorBody = await response.json().catch(() => ({}));
+          const message = errorBody?.error || `Request failed with status ${response.status}`;
+          throw new Error(message);
+        }
+
+        const data = await response.json();
+        if (!data?.prompt) {
+          throw new Error("Prompt missing in response.");
+        }
+
+        return data.prompt.trim();
+      }
+
+      function buildFallbackPrompt(values) {
+        const { character, setting, dialogue } = values;
+        const lens = randomPick(lensOptions);
+        const light = randomPick(lightOptions);
+        const music = randomPick(musicOptions);
+        const variant = ["A", "B", "C"][Math.floor(Math.random() * 3)];
+
+        return `Sora Prompt Variant ${variant}:
+Lead Character: ${character}. Setting: ${setting}. Camera Language: ${lens}, keeping animation-like ease and showcasing micro expressions.
+Atmosphere: ${light}, with particles drifting to the rhythm and shadows softened for charm. Palette: pastel blues, peach glow, and sparkly yellow highlights.
+Action: The hero completes the task with a delightful twist—add exaggerated reactions and 2D speed lines for impact.
+Signature Line: ${dialogue}
+Audio: ${music}, plus bubble pops and star sparkle Foley timed with key movements.
+Delivery: 24fps, 16:9, illustrated animation texture, gentle depth-of-field glow.`;
+      }
+
+      function updateTags() {
+        const picks = new Set();
+        while (picks.size < 4) {
+          picks.add(randomPick(tagOptions));
+        }
+        promptTags.innerHTML = "";
+        picks.forEach((tag) => {
+          const span = document.createElement("span");
+          span.textContent = tag;
+          promptTags.appendChild(span);
+        });
+      }
+
+      function showBubbleBurst() {
+        bubbleTrail.classList.add("active");
+        setTimeout(() => bubbleTrail.classList.remove("active"), 1200);
+      }
+
+      function setLoadingState(isLoading) {
+        if (isLoading) {
+          generateBtn.disabled = true;
+          shuffleBtn.disabled = true;
+          promptResult.classList.add("loading");
+          promptResult.textContent = "Bubble machine is stitching your Sora prompt...";
+        } else {
+          generateBtn.disabled = false;
+          shuffleBtn.disabled = false;
+          promptResult.classList.remove("loading");
+        }
+      }
+
+      promptForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(promptForm);
+        const values = {
+          character: formData.get("character").trim(),
+          setting: formData.get("setting").trim(),
+          dialogue: formData.get("dialogue").trim(),
+        };
+
+        if (!values.character || !values.setting || !values.dialogue) {
+          promptResult.textContent = "Fill in the character, setting, and line so the bubbles know what to build.";
+          return;
+        }
+
+        try {
+          setLoadingState(true);
+          const generatedPrompt = await requestPromptFromServer(values);
+          promptResult.textContent = generatedPrompt;
+          updateTags();
+          showBubbleBurst();
+        } catch (error) {
+          console.error("Prompt generation failed:", error);
+          const fallback = buildFallbackPrompt(values);
+          promptResult.textContent = `We couldn't reach the LLM right now, so here's a playful fallback you can tweak:\n\n${fallback}`;
+          updateTags();
+        } finally {
+          setLoadingState(false);
+        }
+      });
+
+      shuffleBtn.addEventListener("click", () => {
+        const preset = randomPick(ideaPresets);
+        promptForm.elements.character.value = preset.character;
+        promptForm.elements.setting.value = preset.setting;
+        promptForm.elements.dialogue.value = preset.dialogue;
+        promptResult.textContent = "Inspiration loaded! Hit “Shake the Bubble” to see what the machine invents.";
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        const text = promptResult.textContent.trim();
+        if (
+          !text ||
+          text.startsWith("Tap “Shake") ||
+          text.startsWith("Fill in the character")
+        ) {
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => (copyBtn.textContent = "Copy"), 1600);
+        } catch (err) {
+          copyBtn.textContent = "Copy failed";
+          setTimeout(() => (copyBtn.textContent = "Copy"), 1600);
+        }
+      });
+
+      navToggle.addEventListener("click", () => {
+        navToggle.classList.toggle("open");
+        navLinks.classList.toggle("open");
+      });
+    </script>
+  </body>
+</html>
