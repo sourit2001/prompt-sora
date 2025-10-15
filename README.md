@@ -51,6 +51,17 @@ npm start
 
 Open `http://localhost:3000` to use the playground. The Express server serves the static site and proxies prompt requests to OpenRouter.
 
+## Deploying to Vercel
+
+This repo includes a `vercel.json` configuration that tells Vercel to serve `index.html` and `styles.css` as static assets while exposing the serverless API at `/api/prompts/generate`.
+
+1. Push the project to the repository connected to your Vercel project or run `vercel` from the project root.
+2. In the Vercel dashboard, set the environment variables from `.env.example` (at minimum `OPENROUTER_API_KEY`; you can optionally provide the other `OPENROUTER_*` variables).
+3. Leave the build command empty and the output directory as the project root—Vercel reads `vercel.json` to deploy the static assets directly.
+4. Redeploy. The root route `/` will now serve `index.html`, and the front-end can call the serverless function at `/api/prompts/generate`.
+
+> `server.js` remains useful for local development or for hosting on a traditional Node environment. Vercel relies on the files under `api/` instead.
+
 ## API Endpoint
 - `POST /api/prompts/generate`
   - Body: `{ "character": string, "setting": string, "dialogue": string }`
