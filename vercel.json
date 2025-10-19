@@ -4,8 +4,5 @@
       "memory": 1024,
       "maxDuration": 30
     }
-  },
-  "rewrites": [
-    { "source": "/api/prompts/generate", "destination": "/api/prompts/generate" }
-  ]
+  }
 }
