@@ -1,1 +1,6 @@
-{}
+{
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "installCommand": "npm install --prefix api",
+  "devCommand": null
+}
