@@ -1,6 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "replicate": "^1.3.0"
-  }
-}
