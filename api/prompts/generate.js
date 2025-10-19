@@ -1,5 +1,3 @@
-import Replicate from "replicate";
-
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -7,8 +5,9 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.REPLICATE_API_TOKEN;
+  
   if (!apiKey) {
-    return res.status(500).json({ error: "Missing REPLICATE_API_TOKEN." });
+    return res.status(500).json({ error: "Missing REPLICATE_API_TOKEN. Please configure it in Vercel environment variables." });
   }
 
   let body = {};
@@ -45,23 +44,52 @@ ${duration} seconds
 Make the prompt playful yet production-ready. Ensure the pacing and action fit within the ${duration}-second duration.`;
 
   try {
-    const replicate = new Replicate({
-      auth: apiKey,
-    });
-
-    const output = await replicate.run(
-      "openai/gpt-5",
-      {
+    // Use Replicate API directly with fetch for better Vercel compatibility
+    const response = await fetch("https://api.replicate.com/v1/predictions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Token ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        version: "openai/gpt-5",
         input: {
           prompt: `${systemPrompt}\n\n${userPrompt}`,
           max_tokens: 550,
           temperature: 0.7,
         }
-      }
-    );
+      })
+    });
 
-    // Replicate returns output as a string or array of strings
-    const text = Array.isArray(output) ? output.join("") : output;
+    if (!response.ok) {
+      const errorText = await response.text();
+      return res.status(response.status).json({ 
+        error: "Replicate API request failed", 
+        details: errorText,
+        status: response.status
+      });
+    }
+
+    const prediction = await response.json();
+    
+    // Poll for completion
+    let result = prediction;
+    while (result.status === "starting" || result.status === "processing") {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      const pollResponse = await fetch(result.urls.get, {
+        headers: {
+          "Authorization": `Token ${apiKey}`,
+        }
+      });
+      result = await pollResponse.json();
+    }
+
+    if (result.status === "failed") {
+      return res.status(500).json({ error: "Replicate prediction failed", details: result.error });
+    }
+
+    const output = result.output;
+    const text = Array.isArray(output) ? output.join("") : String(output || "");
 
     if (!text) {
       return res.status(502).json({ error: "No content returned from Replicate." });
@@ -69,6 +97,10 @@ Make the prompt playful yet production-ready. Ensure the pacing and action fit w
 
     return res.status(200).json({ prompt: text.trim() });
   } catch (err) {
-    return res.status(500).json({ error: "Failed to generate prompt.", details: err?.message || String(err) });
+    return res.status(500).json({ 
+      error: "Failed to generate prompt.", 
+      details: err?.message || String(err),
+      stack: err?.stack
+    });
   }
 }
