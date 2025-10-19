@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import fetch from "node-fetch";
+import Replicate from "replicate";
 
 dotenv.config();
 
@@ -13,20 +13,16 @@ app.use(express.json({ limit: "1mb" }));
 app.use(express.static("."));
 
 app.post("/api/prompts/generate", async (req, res) => {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.REPLICATE_API_TOKEN;
   if (!apiKey) {
-    return res.status(500).json({ error: "Missing OPENROUTER_API_KEY." });
+    return res.status(500).json({ error: "Missing REPLICATE_API_TOKEN." });
   }
 
-  const model = process.env.OPENROUTER_MODEL || "anthropic/claude-3.5-sonnet";
-  const { character, setting, dialogue } = req.body || {};
+  const { character, setting, dialogue, duration } = req.body || {};
 
-  if (!character || !setting || !dialogue) {
-    return res.status(400).json({ error: "character, setting, and dialogue fields are required." });
+  if (!character || !setting || !dialogue || !duration) {
+    return res.status(400).json({ error: "character, setting, dialogue, and duration fields are required." });
   }
-
-  const referer = process.env.OPENROUTER_SITE_URL || "http://localhost:3000";
-  const appTitle = process.env.OPENROUTER_APP_NAME || "Sora Prompt Playground";
 
   const systemPrompt = `You are a senior creative director helping teams write Sora video prompts.
 Return a single block of text that Sora can consume directly.
@@ -44,51 +40,37 @@ ${setting}
 Signature line, dialogue beat, or key story moment:
 ${dialogue}
 
-Make the prompt playful yet production-ready.`;
+Video duration:
+${duration} seconds
+
+Make the prompt playful yet production-ready. Ensure the pacing and action fit within the ${duration}-second duration.`;
 
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "HTTP-Referer": referer,
-        "X-Title": appTitle,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt }
-        ],
-        temperature: 0.7,
-        max_tokens: 550
-      })
+    const replicate = new Replicate({
+      auth: apiKey,
     });
 
-    if (!response.ok) {
-      const errorPayload = await response.text();
-      return res.status(response.status).json({
-        error: "OpenRouter request failed",
-        details: errorPayload
-      });
+    const output = await replicate.run(
+      "openai/gpt-5",
+      {
+        input: {
+          prompt: `${systemPrompt}\n\n${userPrompt}`,
+          max_tokens: 550,
+          temperature: 0.7,
+        }
+      }
+    );
+
+    // Replicate returns output as a string or array of strings
+    const text = Array.isArray(output) ? output.join("") : output;
+
+    if (!text) {
+      return res.status(502).json({ error: "No content returned from Replicate." });
     }
 
-    const data = await response.json();
-    const choice = data?.choices?.[0];
-    const content = choice?.message?.content;
-
-    if (!content) {
-      return res.status(502).json({ error: "No content returned from OpenRouter." });
-    }
-
-    const text = Array.isArray(content)
-      ? content.map((fragment) => (typeof fragment === "string" ? fragment : fragment?.text || "")).join("").trim()
-      : content.trim();
-
-    return res.json({ prompt: text });
+    return res.json({ prompt: text.trim() });
   } catch (error) {
-    console.error("OpenRouter error:", error);
+    console.error("Replicate error:", error);
     return res.status(500).json({ error: "Failed to generate prompt.", details: error.message });
   }
 });

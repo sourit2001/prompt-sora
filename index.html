@@ -74,6 +74,18 @@
                   required
                 ></textarea>
               </label>
+              <label>
+                Video Duration (seconds)
+                <input
+                  type="number"
+                  name="duration"
+                  placeholder="Example: 10"
+                  min="1"
+                  max="15"
+                  value="10"
+                  required
+                />
+              </label>
               <div class="form-actions">
                 <button type="submit" class="btn primary">Shake the Bubble</button>
                 <button type="button" class="btn ghost" id="shuffleIdea">
@@ -86,9 +98,13 @@
                 <h3>Generated Sora Prompt</h3>
                 <button class="btn tiny" id="copyPrompt">Copy</button>
               </div>
-              <pre id="promptResult" class="prompt-result">
-Tap “Shake the Bubble” to get a complete Sora prompt with camera, lighting, and sound directions.</pre
-              >
+              <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Generating... 0%</div>
+              </div>
+              <textarea id="promptResult" class="prompt-result" rows="8">Tap "Shake the Bubble" to get a complete Sora prompt with camera, lighting, and sound directions.</textarea>
               <div class="prompt-tags" id="promptTags"></div>
               <p class="hint">
                 Each prompt is simulated with playful defaults. Hook it up to your LLM endpoint to unlock live generation.
@@ -301,6 +317,9 @@ Tap “Shake the Bubble” to get a complete Sora prompt with camera, lighting, 
       const promptTags = document.getElementById("promptTags");
       const copyBtn = document.getElementById("copyPrompt");
       const navToggle = document.querySelector(".nav-toggle");
+      const progressContainer = document.getElementById("progressContainer");
+      const progressFill = document.getElementById("progressFill");
+      const progressText = document.getElementById("progressText");
       const navLinks = document.querySelector(".nav-links");
       const bubbleTrail = document.querySelector(".bubble-trail");
       const generateBtn = promptForm.querySelector('button[type="submit"]');
@@ -384,7 +403,7 @@ Tap “Shake the Bubble” to get a complete Sora prompt with camera, lighting, 
       }
 
       function buildFallbackPrompt(values) {
-        const { character, setting, dialogue } = values;
+        const { character, setting, dialogue, duration } = values;
         const lens = randomPick(lensOptions);
         const light = randomPick(lightOptions);
         const music = randomPick(musicOptions);
@@ -396,6 +415,7 @@ Atmosphere: ${light}, with particles drifting to the rhythm and shadows softened
 Action: The hero completes the task with a delightful twist—add exaggerated reactions and 2D speed lines for impact.
 Signature Line: ${dialogue}
 Audio: ${music}, plus bubble pops and star sparkle Foley timed with key movements.
+Duration: ${duration} seconds with pacing optimized for the action.
 Delivery: 24fps, 16:9, illustrated animation texture, gentle depth-of-field glow.`;
       }
 
@@ -417,16 +437,56 @@ Delivery: 24fps, 16:9, illustrated animation texture, gentle depth-of-field glow
         setTimeout(() => bubbleTrail.classList.remove("active"), 1200);
       }
 
+      function updateProgress(percent, text) {
+        progressFill.style.width = percent + "%";
+        progressText.textContent = text || `Generating... ${percent}%`;
+      }
+
+      function showProgress() {
+        progressContainer.style.display = "block";
+        updateProgress(0, "Initializing...");
+      }
+
+      function hideProgress() {
+        progressContainer.style.display = "none";
+        updateProgress(0, "");
+      }
+
+      function simulateProgress(duration = 5000) {
+        return new Promise((resolve) => {
+          const steps = [
+            { percent: 20, text: "Analyzing creative brief...", delay: 500 },
+            { percent: 40, text: "Crafting camera angles...", delay: 1000 },
+            { percent: 60, text: "Designing lighting & mood...", delay: 1500 },
+            { percent: 80, text: "Adding audio cues...", delay: 2000 },
+            { percent: 95, text: "Finalizing prompt...", delay: 2500 },
+          ];
+
+          steps.forEach((step) => {
+            setTimeout(() => {
+              updateProgress(step.percent, step.text);
+            }, step.delay);
+          });
+
+          setTimeout(() => {
+            updateProgress(100, "Complete!");
+            setTimeout(resolve, 300);
+          }, duration);
+        });
+      }
+
       function setLoadingState(isLoading) {
         if (isLoading) {
           generateBtn.disabled = true;
           shuffleBtn.disabled = true;
           promptResult.classList.add("loading");
-          promptResult.textContent = "Bubble machine is stitching your Sora prompt...";
+          promptResult.value = "Bubble machine is stitching your Sora prompt...";
+          showProgress();
         } else {
           generateBtn.disabled = false;
           shuffleBtn.disabled = false;
           promptResult.classList.remove("loading");
+          hideProgress();
         }
       }
 
@@ -437,23 +497,30 @@ Delivery: 24fps, 16:9, illustrated animation texture, gentle depth-of-field glow
           character: formData.get("character").trim(),
           setting: formData.get("setting").trim(),
           dialogue: formData.get("dialogue").trim(),
+          duration: formData.get("duration"),
         };
 
-        if (!values.character || !values.setting || !values.dialogue) {
-          promptResult.textContent = "Fill in the character, setting, and line so the bubbles know what to build.";
+        if (!values.character || !values.setting || !values.dialogue || !values.duration) {
+          promptResult.value = "Fill in the character, setting, and line so the bubbles know what to build.";
           return;
         }
 
         try {
           setLoadingState(true);
-          const generatedPrompt = await requestPromptFromServer(values);
-          promptResult.textContent = generatedPrompt;
+          
+          // Start progress simulation and API request in parallel
+          const [generatedPrompt] = await Promise.all([
+            requestPromptFromServer(values),
+            simulateProgress(5000)
+          ]);
+          
+          promptResult.value = generatedPrompt;
           updateTags();
           showBubbleBurst();
         } catch (error) {
           console.error("Prompt generation failed:", error);
           const fallback = buildFallbackPrompt(values);
-          promptResult.textContent = `We couldn't reach the LLM right now, so here's a playful fallback you can tweak:\n\n${fallback}`;
+          promptResult.value = `We couldn't reach the LLM right now, so here's a playful fallback you can tweak:\n\n${fallback}`;
           updateTags();
         } finally {
           setLoadingState(false);
@@ -465,11 +532,11 @@ Delivery: 24fps, 16:9, illustrated animation texture, gentle depth-of-field glow
         promptForm.elements.character.value = preset.character;
         promptForm.elements.setting.value = preset.setting;
         promptForm.elements.dialogue.value = preset.dialogue;
-        promptResult.textContent = "Inspiration loaded! Hit “Shake the Bubble” to see what the machine invents.";
+        promptResult.value = "Inspiration loaded! Hit “Shake the Bubble” to see what the machine invents.";
       });
 
       copyBtn.addEventListener("click", async () => {
-        const text = promptResult.textContent.trim();
+        const text = promptResult.value.trim();
         if (
           !text ||
           text.startsWith("Tap “Shake") ||
