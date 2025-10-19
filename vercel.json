@@ -1,14 +1,11 @@
 {
   "functions": {
-    "api/**/*.js": {
+    "api/prompts/generate.js": {
       "memory": 1024,
       "maxDuration": 30
     }
   },
-  "routes": [
-    { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/api/prompts/generate", "destination": "/api/prompts/generate" }
   ]
 }
