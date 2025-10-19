@@ -1,10 +1,10 @@
 {
-  "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "styles.css", "use": "@vercel/static" },
-    { "src": "sitemap.xml", "use": "@vercel/static" },
-    { "src": "api/**/*.js", "use": "@vercel/node" }
-  ],
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
   "routes": [
     { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
