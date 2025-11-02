@@ -235,10 +235,7 @@ Delivery: 24fps, 16:9, illustrated animation texture, gentle depth-of-field glow
         });
       }
 
-      function showBubbleBurst() {
-        bubbleTrail.classList.add("active");
-        setTimeout(() => bubbleTrail.classList.remove("active"), 1200);
-      }
+      // showBubbleBurst removed - bubbleTrail element no longer exists
 
       function updateProgress(percent, text) {
         progressFill.style.width = percent + "%";
@@ -319,7 +316,6 @@ Delivery: 24fps, 16:9, illustrated animation texture, gentle depth-of-field glow
           
           promptResult.value = generatedPrompt;
           updateTags();
-          showBubbleBurst();
         } catch (error) {
           console.error("Prompt generation failed:", error);
           const fallback = buildFallbackPrompt(values);
