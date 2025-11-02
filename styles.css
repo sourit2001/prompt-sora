@@ -1,19 +1,19 @@
 :root {
   color-scheme: only light;
-  --bg: #f5f3ff;
-  --bg-secondary: #fef0ff;
+  --bg: #f4fdf7;
+  --bg-secondary: #e8f7ef;
   --surface: #ffffff;
-  --primary: #6348ff;
-  --primary-dark: #3c2ae3;
-  --secondary: #ff9bd3;
-  --accent: #ffc447;
-  --accent-dark: #ff7a59;
-  --text-main: #1f1147;
-  --text-muted: #5d4a88;
-  --border: rgba(31, 17, 71, 0.12);
-  --shadow-lg: 0 25px 60px rgba(80, 48, 190, 0.25);
-  --shadow-md: 0 18px 40px rgba(80, 48, 190, 0.18);
-  --shadow-soft: 0 12px 26px rgba(31, 17, 71, 0.15);
+  --primary: #16a34a;
+  --primary-dark: #15803d;
+  --secondary: #86efac;
+  --accent: #34d399;
+  --accent-dark: #059669;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border: rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 25px 60px rgba(16, 185, 129, 0.22);
+  --shadow-md: 0 18px 40px rgba(16, 185, 129, 0.16);
+  --shadow-soft: 0 12px 26px rgba(15, 23, 42, 0.12);
   --radius-lg: 32px;
   --radius-md: 24px;
   --radius-sm: 18px;
@@ -47,8 +47,8 @@ button {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: clamp(12px, 2vw, 20px) clamp(16px, 4vw, 40px);
-  background: linear-gradient(135deg, #f4f2ff 0%, #fff4fb 40%, #fffbf0 100%);
+  padding: 16px 16px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 40%, #f0fdfa 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -59,9 +59,8 @@ button {
   position: absolute;
   inset: -20% 0 auto;
   height: 380px;
-  background: radial-gradient(circle at 30% 20%, rgba(255, 155, 211, 0.35), transparent 55%),
-    radial-gradient(circle at 80% 15%, rgba(99, 72, 255, 0.35), transparent 45%);
-  opacity: 0.75;
+  background: none;
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -128,7 +127,7 @@ button {
   color: var(--text-main);
   border-radius: 999px;
   font-weight: 700;
-  box-shadow: 0 8px 20px rgba(255, 155, 211, 0.3);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.22);
   transition: transform 0.2s ease;
 }
 
@@ -140,17 +139,17 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: clamp(32px, 7vw, 72px);
-  padding-top: clamp(32px, 6vw, 72px);
+  align-items: stretch;
+  gap: 28px;
+  padding-top: 28px;
   z-index: 2;
 }
 
 .hero-generator {
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 2vw, 24px);
-  width: min(1120px, 100%);
+  gap: 16px;
+  width: 100%;
 }
 
 .generator-intro h1 {
@@ -177,8 +176,8 @@ button {
   width: fit-content;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(255, 196, 71, 0.32);
-  border: 1.5px dashed rgba(255, 122, 89, 0.6);
+  background: rgba(52, 211, 153, 0.22);
+  border: 1.5px dashed rgba(5, 150, 105, 0.6);
   font-weight: 700;
   font-size: 0.85rem;
   color: var(--accent-dark);
@@ -227,9 +226,9 @@ button {
 }
 
 .btn.secondary {
-  background: linear-gradient(140deg, #ffe38b 0%, #ffafcc 100%);
+  background: linear-gradient(140deg, #bbf7d0 0%, #86efac 100%);
   color: var(--text-main);
-  box-shadow: 0 20px 50px rgba(255, 196, 71, 0.35);
+  box-shadow: 0 20px 50px rgba(16, 185, 129, 0.28);
 }
 
 .btn.secondary:hover {
@@ -239,7 +238,7 @@ button {
 .btn.ghost {
   background: #ffffff;
   color: var(--primary);
-  border: 2px solid rgba(99, 72, 255, 0.15);
+  border: 2px solid rgba(22, 163, 74, 0.15);
   box-shadow: var(--shadow-soft);
 }
 
@@ -250,9 +249,9 @@ button {
 .btn.tiny {
   padding: 8px 16px;
   font-size: 0.9rem;
-  background: rgba(99, 72, 255, 0.1);
+  background: rgba(22, 163, 74, 0.1);
   color: var(--primary);
-  border: 1px solid rgba(99, 72, 255, 0.32);
+  border: 1px solid rgba(22, 163, 74, 0.28);
   border-radius: 16px;
 }
 
@@ -285,7 +284,7 @@ button {
   left: 0;
   right: 0;
   height: 140px;
-  background: url("data:image/svg+xml,%3Csvg width='1440' height='320' viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23fef0ff' fill-opacity='1' d='M0,224L60,208C120,192,240,160,360,138.7C480,117,600,107,720,101.3C840,96,960,96,1080,117.3C1200,139,1320,181,1380,202.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='1440' height='320' viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ecfdf5' fill-opacity='1' d='M0,224L60,208C120,192,240,160,360,138.7C480,117,600,107,720,101.3C840,96,960,96,1080,117.3C1200,139,1320,181,1380,202.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
   background-size: cover;
 }
 
@@ -323,8 +322,7 @@ button {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 15% 30%, rgba(255, 196, 71, 0.25), transparent 55%),
-    radial-gradient(circle at 80% 65%, rgba(99, 72, 255, 0.18), transparent 55%);
+  background: none;
   pointer-events: none;
 }
 
@@ -343,7 +341,7 @@ button {
   border-radius: var(--radius-md);
   padding: clamp(20px, 3vw, 32px);
   box-shadow: var(--shadow-soft);
-  border: 2px solid rgba(99, 72, 255, 0.1);
+  border: 2px solid rgba(22, 163, 74, 0.12);
   min-height: auto;
 }
 
@@ -364,10 +362,10 @@ button {
   border: none;
   border-radius: var(--radius-sm);
   padding: 10px 14px;
-  background: #f8f5ff;
+  background: #f0fdf4;
   color: var(--text-main);
   font-size: 0.9rem;
-  box-shadow: inset 0 0 0 1.5px rgba(99, 72, 255, 0.14);
+  box-shadow: inset 0 0 0 1.5px rgba(22, 163, 74, 0.14);
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -381,7 +379,7 @@ button {
 .signup-form input:focus,
 .signup-form select:focus {
   outline: none;
-  box-shadow: inset 0 0 0 2px rgba(99, 72, 255, 0.45);
+  box-shadow: inset 0 0 0 2px rgba(22, 163, 74, 0.45);
   transform: translateY(-1px);
 }
 
@@ -414,15 +412,15 @@ button {
   margin: 0;
   padding: 16px;
   border-radius: var(--radius-sm);
-  background: #f9f6ff;
-  min-height: 120px;
+  background: #ecfdf5;
+  min-height: 420px;
   white-space: pre-wrap;
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--text-main);
-  box-shadow: inset 0 0 0 1px rgba(99, 72, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(22, 163, 74, 0.18);
   width: 100%;
-  border: none;
+  border: 2px solid rgba(22, 163, 74, 0.28);
   font-family: inherit;
   resize: vertical;
   transition: box-shadow 0.2s ease;
@@ -430,7 +428,7 @@ button {
 
 .prompt-result:focus {
   outline: none;
-  box-shadow: inset 0 0 0 2px rgba(99, 72, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.25), inset 0 0 0 2px rgba(22, 163, 74, 0.35);
 }
 
 .prompt-result.loading {
@@ -450,7 +448,7 @@ button {
   align-items: center;
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(255, 155, 211, 0.2);
+  background: rgba(52, 211, 153, 0.2);
   color: var(--accent-dark);
   font-weight: 600;
   font-size: 0.75rem;
@@ -470,7 +468,7 @@ button {
 .progress-bar {
   width: 100%;
   height: 8px;
-  background: rgba(99, 72, 255, 0.1);
+  background: rgba(22, 163, 74, 0.12);
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 8px;
@@ -482,7 +480,7 @@ button {
   border-radius: 999px;
   width: 0%;
   transition: width 0.3s ease;
-  box-shadow: 0 0 10px rgba(99, 72, 255, 0.5);
+  box-shadow: 0 0 10px rgba(22, 163, 74, 0.4);
 }
 
 .progress-text {
@@ -507,9 +505,9 @@ button {
   position: relative;
   padding: clamp(22px, 4vw, 32px);
   border-radius: var(--radius-md);
-  background: linear-gradient(160deg, rgba(255, 196, 71, 0.18), rgba(255, 255, 255, 0.92));
+  background: linear-gradient(160deg, rgba(52, 211, 153, 0.18), rgba(255, 255, 255, 0.92));
   box-shadow: var(--shadow-soft);
-  border: 2px solid rgba(255, 196, 71, 0.2);
+  border: 2px solid rgba(52, 211, 153, 0.22);
   min-height: 220px;
   display: flex;
   flex-direction: column;
@@ -517,8 +515,8 @@ button {
 }
 
 .feature-card:nth-child(2n) {
-  background: linear-gradient(160deg, rgba(99, 72, 255, 0.18), rgba(255, 255, 255, 0.92));
-  border-color: rgba(99, 72, 255, 0.18);
+  background: linear-gradient(160deg, rgba(22, 163, 74, 0.18), rgba(255, 255, 255, 0.92));
+  border-color: rgba(22, 163, 74, 0.18);
 }
 
 .card-icon {
@@ -576,7 +574,7 @@ button {
   width: 52px;
   height: 52px;
   border-radius: 18px;
-  background: linear-gradient(160deg, rgba(99, 72, 255, 0.18), rgba(255, 196, 71, 0.36));
+  background: linear-gradient(160deg, rgba(22, 163, 74, 0.16), rgba(52, 211, 153, 0.28));
   font-weight: 800;
 }
 
@@ -589,8 +587,7 @@ button {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 20% 25%, rgba(255, 155, 211, 0.16), transparent 45%),
-    radial-gradient(circle at 80% 75%, rgba(99, 72, 255, 0.16), transparent 50%);
+  background: none;
   pointer-events: none;
 }
 
@@ -645,7 +642,7 @@ button {
 }
 
 .cta {
-  background: linear-gradient(135deg, rgba(255, 196, 71, 0.85), rgba(255, 155, 211, 0.9));
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.85), rgba(134, 239, 172, 0.9));
   color: var(--text-main);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
@@ -690,7 +687,7 @@ button {
 
 .footer {
   padding: clamp(48px, 8vw, 72px) clamp(20px, 8vw, 96px) clamp(28px, 6vw, 48px);
-  background: #1f1147;
+  background: #064e3b;
   color: rgba(255, 255, 255, 0.86);
   display: grid;
   gap: 32px;
@@ -820,3 +817,143 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* Minimal theme overrides: simplify layout and visuals */
+.hero-wave,
+.bubble-trail,
+#features,
+#workflow,
+#stories {
+  display: none !important;
+}
+
+.nav-links,
+.cta-link {
+  display: none !important;
+}
+
+.hero-body {
+  gap: 28px;
+  padding-top: 28px;
+}
+
+.generator {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 16px !important;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .generator { grid-template-columns: 1fr 1fr; }
+}
+
+/* Make panels fill columns fully */
+.generator-form,
+.generator-output {
+  width: 100% !important;
+}
+
+.generator-form,
+.generator-output {
+  box-shadow: none !important;
+  border: 1px solid rgba(22, 163, 74, 0.16) !important;
+  padding: 16px !important;
+}
+
+.btn {
+  box-shadow: none !important;
+}
+
+.feature-grid,
+.workflow-list,
+.story-cards,
+.footer-links,
+.hero-stats {
+  display: none !important;
+}
+
+.footer {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-top: 1px solid rgba(15,23,42,0.08);
+}
+
+.footer-brand p {
+  color: #475569 !important;
+}
+
+.section {
+  padding: 40px 20px !important;
+}
+
+.generator-intro p {
+  color: #475569 !important;
+}
+
+.prompt-tags { display: none !important; }
+
+/* Typography simplification: reduce size variants */
+h1, h2, h3 {
+  font-size: 1.25rem !important;
+  line-height: 1.35 !important;
+}
+
+.generator-intro h1 {
+  font-size: 1.35rem !important;
+}
+
+.output-header h3 {
+  font-size: 1rem !important;
+}
+
+label, .hint, .progress-text, .btn {
+  font-size: 0.95rem !important;
+}
+
+/* Keep intro hidden but show concise labels */
+.generator-intro { display: none !important; }
+.generator-form label {
+  color: var(--text-muted) !important;
+  font-weight: 700 !important;
+  display: grid !important;
+  gap: 6px !important;
+  margin-bottom: 8px !important;
+}
+.generator-form label input,
+.generator-form label textarea {
+  color: var(--text-main);
+}
+
+/* Compact controls */
+.form-actions { margin-top: 8px !important; gap: 10px !important; }
+.btn { padding: 8px 14px !important; border-radius: 10px !important; }
+
+/* Keep headers minimal in output */
+.output-header h3 { font-weight: 700; }
+
+/* Final unification: single font size across all common elements */
+body, h1, h2, h3, p, label, small,
+.btn, .output-header h3, .hint, .progress-text,
+.nav .logo, .nav-links a,
+input, textarea, select, .prompt-result {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+/* Ensure textarea matches input typography and spacing */
+.generator-form input,
+.generator-form textarea {
+  font-family: inherit !important;
+  font-weight: 400 !important;
+  padding: 10px 14px !important;
+}
+
+/* Consistent placeholder appearance */
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8 !important; /* slate-400 */
+  opacity: 1 !important;
+}
+
