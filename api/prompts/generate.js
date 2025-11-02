@@ -1,6 +1,7 @@
 import Replicate from "replicate";
 
 export const config = {
+  runtime: "nodejs18.x",
   maxDuration: 60,
 };
 

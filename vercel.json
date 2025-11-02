@@ -4,5 +4,9 @@
       "maxDuration": 60
     }
   },
-  "outputDirectory": "."
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }

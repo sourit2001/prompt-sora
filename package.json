@@ -2,6 +2,7 @@
   "name": "sora-prompt-playground",
   "version": "1.0.0",
   "description": "Playful landing page and prompt generator powered by OpenRouter LLM.",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
