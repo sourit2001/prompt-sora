@@ -936,10 +936,138 @@ label, .hint, .progress-text, .btn {
 /* Final unification: single font size across all common elements */
 body, h1, h2, h3, p, label, small,
 .btn, .output-header h3, .hint, .progress-text,
-.nav .logo, .nav-links a,
-input, textarea, select, .prompt-result {
+.nav .logo, .nav-links a {
   font-size: 14px !important;
   line-height: 1.5 !important;
+}
+
+/* Larger font for input/output areas */
+input, textarea, select, .prompt-result {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+/* Site footer styling */
+.site-footer {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border-top: 1px solid rgba(22, 163, 74, 0.12);
+  padding: 48px 20px 32px;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer-content h2 {
+  font-size: 2rem !important;
+  color: var(--primary);
+  margin-bottom: 32px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.faq-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.faq-item {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(22, 163, 74, 0.12);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.faq-item h3 {
+  font-size: 1.3rem !important;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.faq-item p {
+  font-size: 15px !important;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.faq-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+
+.faq-item li {
+  padding: 8px 0 8px 20px;
+  font-size: 15px !important;
+  color: var(--text-muted);
+  line-height: 1.6;
+  position: relative;
+}
+
+.faq-item li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .comparison {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.comparison-col {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 3px solid var(--primary);
+}
+
+.comparison-col h4 {
+  font-size: 1.1rem !important;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+.example-text {
+  font-size: 14px !important;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.footer-note {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(22, 163, 74, 0.08);
+}
+
+.footer-note a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-note a:hover {
+  text-decoration: underline;
 }
 
 /* Ensure textarea matches input typography and spacing */
